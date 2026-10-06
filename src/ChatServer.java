@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class ChatServer {
     public static void main(String[] args) {
@@ -10,16 +9,16 @@ public class ChatServer {
             System.out.println("Chat server started");
             System.out.println("Waiting for a Client");
 
-            ArrayList<ClientHandler> clients = new ArrayList<>();
-            
+            ClientRegistry registry = new ClientRegistry();
+
             while (true){
 
                 Socket socket  = serverSocket.accept();
                 System.out.println("Client Connected! ");
 
-                ClientHandler handler = new ClientHandler(socket);
+                ClientHandler handler = new ClientHandler(socket, registry);
                 
-                clients.add(handler);
+                registry.addClient(handler);
                 
                 Thread clientthread = new Thread(handler);
 

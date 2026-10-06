@@ -24,30 +24,30 @@ public class ClientHandler implements Runnable {
     @Override 
     public void run(){
         try{
+            
              BufferedReader in  = new BufferedReader(
                 new InputStreamReader(socket.getInputStream()));
 
             out = new PrintWriter(socket.getOutputStream(), true);
-
-            out.println("Welcome to Chat server");
-
-
+            
             String usernameMessage = in.readLine();
             if (usernameMessage != null && usernameMessage.startsWith("Username:")){
                 username = usernameMessage.substring(9);
             }
+            System.out.println(username + " Connected");
+            out.println("Welcome to Chat server " + username);
 
 
             String message;
 
             while ((message = in.readLine()) != null){
-                System.out.println("Client says: "+ message);
-                registry.broadcast("["+username + "] " + message);
+                System.out.println(username + " says: "+ message);
+                registry.broadcast("["+username + "] " + message, this);
                 
             }
 
             
-            System.out.println("Client Disconnected!");
+            System.out.println( username+" Disconnected!");
 
         }
         catch (IOException e){

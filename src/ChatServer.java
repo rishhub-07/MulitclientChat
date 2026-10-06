@@ -14,7 +14,7 @@ public class ChatServer {
             while (true){
 
                 Socket socket  = serverSocket.accept();
-                System.out.println("Client Connected! ");
+                // System.out.println("Client Connected! ");
 
                 ClientHandler handler = new ClientHandler(socket, registry);
                 

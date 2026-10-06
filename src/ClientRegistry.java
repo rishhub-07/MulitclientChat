@@ -8,9 +8,11 @@ public class ClientRegistry {
         clients.add(client);
     }
 
-    public void broadcast(String message){
+    public void broadcast(String message, ClientHandler sender){
         for (ClientHandler client : clients){
-            client.sendMessage(message);
+            if (client != sender){
+                client.sendMessage(message);
+            }   
         }
     }
 

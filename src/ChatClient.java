@@ -7,9 +7,10 @@ import java.util.Scanner;
 
 public class ChatClient {
     public static void main(String[] args) {
+        Scanner scanner = new  Scanner(System.in);
         try (Socket socket = new Socket("127.0.0.1", 8080)){
 
-            Scanner scanner = new  Scanner(System.in);
+            
             System.out.println("Connected to Chat Server");
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
@@ -32,13 +33,16 @@ public class ChatClient {
                 String message = scanner.nextLine();
                 out.println(message);
 
+                
+
             }
+            
         }
 
         catch(IOException e){
             e.printStackTrace();
         }
-
-    
+        scanner.close();
+        
     }
 }

@@ -19,4 +19,14 @@ public class ClientRegistry {
     public void removeClient(ClientHandler client){
         clients.remove(client);
     }
+
+    public String getUserList(){
+        StringBuilder result = new StringBuilder();
+        result.append("Online Users: \n");
+        for (ClientHandler client : clients){
+            result.append("- " + client.getUsername());
+            result.append("\n");
+        }
+        return result.toString();
+    }
 }

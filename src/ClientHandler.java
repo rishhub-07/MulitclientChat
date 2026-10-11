@@ -51,19 +51,6 @@ public class ClientHandler implements Runnable {
 
             while ((message = in.readLine()) != null){
 
-                // if (message.equals("/users")){
-                //     sendMessage(registry.getUserList());
-                // }
-                
-                // else if(message.contains("/nick ")){
-                //     String new_username = message.substring(6);
-                //     setUsername(new_username);
-                //     sendMessage("Your username is now: "+new_username);
-                // }
-                // else{
-                //     System.out.println(username + " says: "+ message);
-                //     registry.broadcast("["+username + "] " + message, this);
-                // }
                 Command command = parser.parse(message);
 
                 if (command.getName().equals("USERS")){
@@ -79,13 +66,16 @@ public class ClientHandler implements Runnable {
                     setUsername(new_username);
                     sendMessage("Your username is now: "+new_username);
                 }
+                else if (command.getName().equals("UNKNOW")){
+                    sendMessage("Unknown Command: "+ command.getArgument());
+                }
                 else{
+                    System.out.println(username + "  says: " + message);
                     registry.broadcast("["+username + "] " + message, this);
                 }
                 
             }
 
-             
             System.out.println( username+" Disconnected!");
 
         }

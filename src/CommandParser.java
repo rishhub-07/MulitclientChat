@@ -12,6 +12,13 @@ public class CommandParser {
 
             return new Command("NICK", username);
         }
+        if (message.startsWith("/w ")){
+            return new Command("WHISPER", message.substring(3));
+        }
+        if (message.startsWith("/")){
+            return new Command("UNKNOWN", message);
+        }
+        
 
         return new Command("MESSAGE", message);
     }

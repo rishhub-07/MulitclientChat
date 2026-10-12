@@ -58,21 +58,53 @@ public class ClientHandler implements Runnable {
                     sendMessage(registry.getUserList());
                 }
                 else if ( command.getName().equals("NICK")){
-
+                    String old_username = this.username;
                     String new_username = command.getArgument();
                     if (new_username.isBlank()){
-                        sendMessage(message);
+                        sendMessage("Enter valid username.");
                     }
-                    setUsername(new_username);
-                    sendMessage("Your username is now: "+new_username);
+                    else{
+                        setUsername(new_username);
+                        System.out.println("Username of "+old_username +"changd to: "+ new_username);
+                        sendMessage("Your username is now: "+new_username);
+                    }
                 }
-                else if (command.getName().equals("UNKNOW")){
+                else if (command.getName().equals("UNKNOWN")){
                     sendMessage("Unknown Command: "+ command.getArgument());
+                }
+                else if (command.getName().equals("WHISPER")){
+                    String arguments = command.getArgument().trim();
+
+                    int spaceindex = arguments.indexOf(" ");
+
+                    if (spaceindex == -1){
+                        sendMessage("Usage: /w <username> <message>");
+                        continue;
+                    }
+
+                    String recipientName = arguments.substring(0,spaceindex);
+                    String privateMessage = arguments.substring(spaceindex+1).trim();
+
+                    if (privateMessage.isBlank()){
+                        sendMessage("Please enter a message to send");
+                        continue;
+                    }
+
+                    ClientHandler recipient = registry.getClientByUsername(recipientName);
+                    
+                    if (recipient == null){
+                        sendMessage("User not found: " + recipientName);
+                        continue;
+                    }
+                    
+                    recipient.sendMessage("[private] "+"[" + username +"] " + privateMessage);
+
                 }
                 else{
                     System.out.println(username + "  says: " + message);
                     registry.broadcast("["+username + "] " + message, this);
                 }
+
                 
             }
 

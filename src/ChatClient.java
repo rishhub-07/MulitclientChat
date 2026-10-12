@@ -26,15 +26,10 @@ public class ChatClient {
             String username = scanner.nextLine();
             out.println("Username:"+ username);
             
-            
-            
             while (true) {
                 
                 String message = scanner.nextLine();
                 out.println(message);
-
-                
-
             }
             
         }
